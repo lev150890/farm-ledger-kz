@@ -1,0 +1,16 @@
+{
+  "id": "./",
+  "name": "Наше хозяйство — учёт",
+  "short_name": "Хозяйство",
+  "description": "Поголовье, расходы и доходы фермерского хозяйства в тенге",
+  "lang": "ru-KZ",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f5ef",
+  "theme_color": "#f5f5ef",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

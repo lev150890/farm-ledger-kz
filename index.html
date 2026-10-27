@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5f5ef" />
+  <title>Учёт хозяйства — Амиржанов</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-icon">⌂</span><span>наше<span class="brand-soft"> хозяйство</span></span></a>
+      <div class="farm-badge"><span class="farm-emoji">🐄</span><span><b>Семья Амиржанов</b><small>Учёт хозяйства</small></span></div>
+      <p class="nav-caption">УЧЁТ</p>
+      <button class="nav-item active" data-target="overview"><span>▦</span>Обзор</button>
+      <button class="nav-item" data-target="herd"><span>♧</span>Поголовье</button>
+      <button class="nav-item" data-target="daily-rule"><span>☼</span>Сезоны</button>
+      <button class="nav-item" data-target="categories"><span>⚙</span>Статьи</button>
+      <button class="nav-item" id="nav-transactions" data-target="operations-panel"><span>↕</span>Все операции</button>
+      <div class="sidebar-bottom"><span class="leaf">✿</span><p>Заботливый учёт —<br />крепкое хозяйство.</p><small>Все записи остаются<br />на этом устройстве</small></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar"><div class="crumb">Хозяйство <span>/</span> <b>Финансы</b></div><div class="top-actions"><label class="year-picker">ГОД <select id="year-select" aria-label="Выбрать год"></select></label><button class="export-button" id="install-app" hidden>⇩ <span>Установить</span></button><button class="export-button" id="export-button">↓ <span>Скачать отчёт</span></button><button class="add-button" id="add-entry">＋ <span>Добавить запись</span></button></div></header>
+
+      <section class="intro"><div><p class="eyebrow">ХОЗЯЙСТВО АМИРЖАНОВ</p><h1>Расходы и доходы</h1><p class="subtitle">Понятная картина хозяйства — месяц за месяцем.</p></div><div class="season-note"><span>🌿</span><div><b>Годовой учёт</b><small>Все суммы в тенге</small></div></div></section>
+
+      <section id="overview" class="summary-grid" aria-label="Финансовые итоги за год">
+        <article class="summary-card income-card"><div class="summary-heading"><span>ДОХОД ОТ ПРОДАЖ</span><span class="sum-icon">↗</span></div><div class="sum-number" id="income-total">0 ₸</div><div class="sum-note">Молоко и молочная продукция</div><div class="decor income-decor">＋</div></article>
+        <article class="summary-card expense-card"><div class="summary-heading"><span>РАСХОДЫ ХОЗЯЙСТВА</span><span class="sum-icon">↘</span></div><div class="sum-number" id="expense-total">0 ₸</div><div class="sum-note">Корма, вода, сарай и другое</div><div class="decor expense-decor">−</div></article>
+        <article class="summary-card balance-card"><div class="summary-heading"><span>ОСТАТОК ЗА ГОД</span><span class="sum-icon">◒</span></div><div class="sum-number" id="balance-total">0 ₸</div><div class="sum-note" id="balance-caption">Доходы минус расходы</div><div class="decor balance-decor">✳</div></article>
+      </section>
+
+      <section id="herd" class="panel herd-panel"><div class="herd-heading"><div><p class="eyebrow">ЖИВОТНЫЕ</p><h2>Поголовье</h2><p class="herd-subtitle">Укажите, сколько животных сейчас в хозяйстве.</p></div><button class="export-button" id="edit-herd">✎ <span>Изменить количество</span></button></div><div id="herd-grid" class="herd-grid"></div></section>
+
+      <section id="daily-rule" class="panel daily-rule-panel"><div class="operations-heading"><div><p class="eyebrow">АВТОМАТИЧЕСКИЙ РАСЧЁТ</p><h2>Ежедневный расход на КРС</h2><p class="herd-subtitle">Ставка считается на одну корову. Лето — пастбище, зима — стойло.</p></div></div><form id="daily-rule-form" class="daily-rule-form"><label class="daily-toggle"><input id="daily-enabled" type="checkbox" /><span><b>Учитывать ежедневный расход автоматически</b><small>Будет рассчитан для выбранного года с 1 января.</small></span></label><label>Статья расхода<select id="daily-category" required></select></label><div class="season-settings"><div class="season-setting summer-season"><h3>☀ Летний период — пастбище</h3><div class="form-row"><label>Начало<input id="summer-start" type="date" required /></label><label>Конец<input id="summer-end" type="date" required /></label></div><label>Сумма на одну корову за день, ₸<input id="summer-rate" type="number" min="0" step="1" inputmode="numeric" required value="350" /></label></div><div class="season-setting winter-season"><h3>❄ Зимний период — остаток года</h3><p>Все дни вне летнего периода автоматически считаются зимними.</p><label>Сумма на одну корову за день, ₸<input id="winter-rate" type="number" min="0" step="1" inputmode="numeric" required value="1500" /></label></div></div><div id="daily-rule-preview" class="daily-rule-preview"></div><p class="daily-rule-note">Используется текущее поголовье КРС для всех дней выбранного года. Изменённые ставки и периоды применяются после сохранения. Если на дату уже есть ручная запись по этой статье, автоначисление за день пропускается.</p><div class="dialog-actions"><button type="submit" class="add-button">Сохранить настройки</button></div></form></section>
+
+      <section class="chart-grid">
+        <article class="panel chart-panel"><div class="panel-title"><div><p class="eyebrow">ДИНАМИКА</p><h2>По месяцам</h2></div><div class="legend"><span><i class="legend-income"></i>Доходы</span><span><i class="legend-expense"></i>Расходы</span></div></div><div id="monthly-chart" class="monthly-chart"></div></article>
+        <article class="panel category-panel"><div class="panel-title"><div><p class="eyebrow">РАСХОДЫ</p><h2>Куда вложили</h2></div></div><div id="category-summary" class="category-summary"></div></article>
+      </section>
+
+      <section class="panel category-manager" id="categories"><div class="operations-heading"><div><p class="eyebrow">НАСТРОЙКИ УЧЁТА</p><h2>Статьи доходов и расходов</h2><p class="herd-subtitle">Добавляйте и редактируйте позиции, по которым ведёте расчёт.</p></div><button class="add-button" id="add-category">＋ <span>Добавить статью</span></button></div><div class="category-tabs"><button class="filter active" data-category-type="expense">Расходы</button><button class="filter" data-category-type="income">Доходы</button></div><div id="category-editor-list" class="category-editor-list"></div></section>
+
+      <section class="panel operations-panel" id="operations-panel"><div class="operations-heading"><div><p class="eyebrow">ЖУРНАЛ ХОЗЯЙСТВА</p><h2>Записи за <span id="selected-year-label"></span></h2></div><div class="filters" role="group" aria-label="Фильтр записей"><button class="filter active" data-filter="all">Все</button><button class="filter" data-filter="income">Доходы</button><button class="filter" data-filter="expense">Расходы</button></div></div><div class="table-wrap"><table><thead><tr><th>ДАТА</th><th>СТАТЬЯ</th><th>ЖИВОТНЫЕ</th><th>ОПИСАНИЕ</th><th>ТИП</th><th class="amount-head">СУММА</th><th></th></tr></thead><tbody id="entries-body"></tbody></table></div><div id="empty-state" class="empty-state" hidden><span>🌾</span><h3>Пока нет записей за этот год</h3><p>Добавьте первый расход или продажу молочной продукции.</p><button class="add-button" id="empty-add">＋ Добавить запись</button></div></section>
+      <footer class="footer"><span>Учёт хозяйства Амиржанов</span><span>Данные хранятся в браузере этого устройства</span></footer>
+    </main>
+  </div>
+
+  <dialog id="entry-dialog"><form id="entry-form"><div class="dialog-header"><div><p class="eyebrow">УЧЁТ ХОЗЯЙСТВА</p><h2 id="form-title">Новая запись</h2></div><button type="button" class="close-button" id="close-dialog" aria-label="Закрыть">×</button></div><div class="type-choice"><button type="button" class="type-option selected" data-type="expense">− Расход</button><button type="button" class="type-option" data-type="income">＋ Доход</button></div><label>К какой группе относится<select id="entry-livestock" required></select></label><label>Статья<select id="entry-category" required></select></label><label>Описание<input id="entry-description" maxlength="120" placeholder="Например: сено на зиму, продажа молока" /></label><label>Сумма за одну дату, ₸<input id="entry-amount" type="number" min="1" step="1" inputmode="numeric" required placeholder="0" /></label><div class="form-row" id="single-date-row"><label>Дата<input id="entry-date" type="date" /></label><button type="button" class="calendar-mode-button" id="enable-multi-dates">▦ Выбрать несколько дат</button></div><section id="date-calendar" class="date-calendar" hidden><div class="calendar-instructions">Выберите даты в одном году. На каждую дату будет записан расход с одинаковой суммой.</div><div class="calendar-toolbar"><button type="button" id="calendar-prev" aria-label="Предыдущий месяц">‹</button><select id="calendar-month" aria-label="Месяц"></select><input id="calendar-year" type="number" min="2000" max="2100" aria-label="Год" /><button type="button" id="calendar-next" aria-label="Следующий месяц">›</button></div><div class="calendar-weekdays"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div><div id="calendar-days" class="calendar-days"></div><div class="calendar-summary"><span id="calendar-selected-count">Даты не выбраны</span><b id="calendar-total-preview">0 ₸</b></div><button type="button" class="calendar-mode-button" id="disable-multi-dates">← Вернуться к одной дате</button></section><div class="dialog-actions"><button type="button" class="secondary-button" id="cancel-entry">Отмена</button><button type="submit" class="add-button">Сохранить запись</button></div></form></dialog>
+  <dialog id="herd-dialog"><form id="herd-form"><div class="dialog-header"><div><p class="eyebrow">ПОГОЛОВЬЕ</p><h2>Количество животных</h2></div><button type="button" class="close-button" id="close-herd" aria-label="Закрыть">×</button></div><div id="herd-fields" class="herd-fields"></div><div class="dialog-actions"><button type="button" class="secondary-button" id="cancel-herd">Отмена</button><button type="submit" class="add-button">Сохранить</button></div></form></dialog>
+  <dialog id="category-dialog"><form id="category-form"><div class="dialog-header"><div><p class="eyebrow" id="category-dialog-kind">СТАТЬЯ РАСХОДА</p><h2 id="category-dialog-title">Новая статья</h2></div><button type="button" class="close-button" id="close-category" aria-label="Закрыть">×</button></div><label>Название статьи<input id="category-name" maxlength="45" required placeholder="Например, покупка комбикорма" /></label><label>Значок<input id="category-emoji" maxlength="8" required value="📦" /></label><div class="dialog-actions"><button type="button" class="secondary-button" id="cancel-category">Отмена</button><button type="submit" class="add-button">Сохранить</button></div></form></dialog>
+  <dialog id="delete-dialog"><div class="delete-content"><div class="dialog-header"><div><p class="eyebrow">ПРОВЕРЬТЕ ДЕЙСТВИЕ</p><h2>Удалить запись?</h2></div><button type="button" class="close-button" id="close-delete" aria-label="Закрыть">×</button></div><p id="delete-description"></p><div class="dialog-actions"><button class="secondary-button" id="cancel-delete">Оставить</button><button class="danger-button" id="confirm-delete">Удалить</button></div></div></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
